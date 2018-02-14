@@ -35,8 +35,8 @@ class DebugBar extends AbstractAdapter
     /**
      * @param QueryCollector $colector
      */
-    public function setCollector(QueryCollector $colector)
+    public function setCollector(QueryCollector $collector)
     {
-        $this->collector = $colector;
+        $this->collector = $collector;
     }
 }
