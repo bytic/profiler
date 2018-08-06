@@ -39,7 +39,7 @@ class Nip_Profiler
      */
     public function setEnabled($enabled = false)
     {
-        $this->enabled = (boolean) $enabled;
+        $this->enabled = (boolean)$enabled;
         return $this;
     }
 
@@ -84,10 +84,11 @@ class Nip_Profiler
 
     /**
      * @param boolean $name
+     * @return string
      */
-    public function newProfileID($name)
+    public function newProfileID($name = null)
     {
-        if ($name) {
+        if (empty($name)) {
             return $name;
         }
         $profilesCount = count($this->getProfiles(null, true));
@@ -253,7 +254,7 @@ class Nip_Profiler
         if (null === $minimumSeconds) {
             $this->filterElapsedSecs = null;
         } else {
-            $this->filterElapsedSecs = (integer) $minimumSeconds;
+            $this->filterElapsedSecs = (integer)$minimumSeconds;
         }
 
         return $this;
