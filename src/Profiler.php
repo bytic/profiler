@@ -1,12 +1,11 @@
 <?php
 
-/**
- * Nip Framework
- */
-
 use Nip\Profiler\Adapters\AbstractAdapter;
 use Nip\Profiler\Profile;
 
+/**
+ * Class Nip_Profiler
+ */
 class Nip_Profiler
 {
     public $enabled = false;
@@ -44,6 +43,9 @@ class Nip_Profiler
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function clear()
     {
         $this->profiles = [];
@@ -52,6 +54,10 @@ class Nip_Profiler
     }
 
 
+    /**
+     * @param bool $profileName
+     * @return Profile|void
+     */
     public function start($profileName = false)
     {
         if (!$this->checkEnabled()) {
@@ -68,6 +74,9 @@ class Nip_Profiler
         return $profile;
     }
 
+    /**
+     * @return bool
+     */
     public function checkEnabled()
     {
         return $this->enabled;
@@ -85,6 +94,11 @@ class Nip_Profiler
         return 'profile' . $profilesCount;
     }
 
+    /**
+     * @param null $type
+     * @param bool $showUnfinished
+     * @return array|bool
+     */
     public function getProfiles($type = null, $showUnfinished = false)
     {
         $profiles = [];
@@ -100,23 +114,29 @@ class Nip_Profiler
             }
         }
 
-        if (empty($profiles)) {
-            $profiles = false;
-        }
-
         return $profiles;
     }
 
+    /**
+     * @param $id
+     * @return Profile
+     */
     public function newProfile($id)
     {
         return new Profile($id);
     }
 
+    /**
+     * @param $profileID
+     */
     public function addRunningProces($profileID)
     {
         $this->runningProfiles[] = $profileID;
     }
 
+    /**
+     * @param bool $profileID
+     */
     public function end($profileID = false)
     {
         $profileID = $this->endPreckeck($profileID);
@@ -177,11 +197,19 @@ class Nip_Profiler
         return $profile;
     }
 
+    /**
+     * @param $profile
+     * @return bool
+     */
     protected function applyFilters($profile)
     {
         return $this->secondsFilter($profile);
     }
 
+    /**
+     * @param $profile
+     * @return bool
+     */
     public function secondsFilter($profile)
     {
         if ($profile && null !== $this->filterElapsedSecs && $profile->getElapsedSecs() < $this->filterElapsedSecs) {
@@ -191,6 +219,9 @@ class Nip_Profiler
         return true;
     }
 
+    /**
+     * @param $profile
+     */
     public function deleteProfile($profile)
     {
         if (!array_key_exists($profile->profileID, $this->profiles)) {
@@ -200,6 +231,9 @@ class Nip_Profiler
         return;
     }
 
+    /**
+     * @param $profile
+     */
     public function outputWriters($profile)
     {
         foreach ($this->writers as $writer) {
